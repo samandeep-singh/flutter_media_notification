@@ -30,6 +30,16 @@ public class NotificationPanel extends Service {
         boolean isPlaying = intent.getBooleanExtra("isPlaying", true);
         String title = intent.getStringExtra("title");
         String author = intent.getStringExtra("author");
+        String albumArtPath = intent.getStringExtra("albumArtPath");
+
+        try {
+            File f = new File(albumArtPath);
+            Bitmap albumArtBitmap = BitmapFactory.decodeStream(new FileInputStream(f));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
 
         createNotificationChannel();
 
@@ -68,7 +78,8 @@ public class NotificationPanel extends Service {
         PendingIntent selectPendingIntent = PendingIntent.getBroadcast(this, 0, selectIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 //        MediaButtonReceiver.handleIntent(mediaSession, selectIntent);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        Notification notification;
+        notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .addAction(R.drawable.baseline_skip_previous_black_48, "prev", pendingPrevIntent)
                 .addAction(iconPlayPause, titlePlayPause, pendingToggleIntent)
                 .addAction(R.drawable.baseline_skip_next_black_48, "next", pendingNextIntent)
@@ -84,7 +95,7 @@ public class NotificationPanel extends Service {
                 .setContentText(author)
                 .setSubText(title)
                 .setContentIntent(selectPendingIntent)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_stat_music_note))
+                .setLargeIcon(albumArtBitmap)
                 .build();
 
         startForeground(NOTIFICATION_ID, notification);
