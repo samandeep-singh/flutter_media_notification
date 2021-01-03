@@ -14,6 +14,12 @@ import android.support.v4.media.session.MediaSessionCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.media.session.MediaButtonReceiver;
 
+import java.io.File;
+import android.graphics.Bitmap;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+
 
 public class NotificationPanel extends Service {
     public static int NOTIFICATION_ID = 1;
