@@ -37,10 +37,11 @@ public class NotificationPanel extends Service {
         String title = intent.getStringExtra("title");
         String author = intent.getStringExtra("author");
         String albumArtPath = intent.getStringExtra("albumArtPath");
+        Bitmap albumArtBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_stat_music_note);
 
         try {
             File f = new File(albumArtPath);
-            Bitmap albumArtBitmap = BitmapFactory.decodeStream(new FileInputStream(f));
+            albumArtBitmap = BitmapFactory.decodeStream(new FileInputStream(f));
         }
         catch (FileNotFoundException e)
         {
